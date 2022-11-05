@@ -9,6 +9,65 @@
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
+void blink(int delay_time) {
+  for (int i = 0; i < image_blink_length; i++){
+    display.clearDisplay();
+    display.drawBitmap(0, 0, image_blink[i], 128, 64, 1);
+    display.display();
+    delay(delay_time); 
+  };
+};
+
+void happy(int delay_time) {
+  for (int i = 0; i < image_happy_length; i++){
+    display.clearDisplay();
+    display.drawBitmap(0, 0, image_happy[i], 128, 64, 1);
+    display.display();
+    delay(delay_time); 
+  };
+};
+
+void running(int delay_time) {
+  for (int i = 0; i < image_running_length; i++){
+    display.clearDisplay();
+    display.drawBitmap(0, 0, image_running[i], 128, 64, 1);
+    display.display();
+    delay(delay_time); 
+  };
+};
+
+void middleRun(int delay_time){
+  for (int i = 0; i < 2; i++){
+    display.clearDisplay();
+    display.drawBitmap(0, 0, image_running[i], 128, 64, 1);
+    display.display();
+    delay(delay_time); 
+  };
+  
+  for(int k = 0; k < 100; k++){
+    for (int i = 2; i < 9; i++){
+      display.clearDisplay();
+      display.drawBitmap(0, 0, image_running[i], 128, 64, 1);
+      display.display();
+      delay(delay_time); 
+    };
+  };
+
+  for (int i = 2; i < image_running_length; i++){
+    display.clearDisplay();
+    display.drawBitmap(0, 0, image_running[i], 128, 64, 1);
+    display.display();
+    delay(delay_time); 
+  };
+}
+
+void stare(int delay_time) {
+  display.drawBitmap(0, 0, image_blink[0], 128, 64, 1);
+  display.display();
+  delay(delay_time);
+};
+
+
 void setup() {
   Serial.begin(115200);
  
@@ -21,55 +80,29 @@ void setup() {
 // Clear the buffer.
   display.clearDisplay();
 
-// Draw W01 WORD_HELLO bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_1, 128, 64, 1);
+  stare(100);
   display.display();
 
 }
 
 void loop() {
   
-  delay(3000); // Pause for 2 seconds
+  
+  blink(50);
+  
+  stare(500);
+  
+  happy(100);
+
+  stare(500);
+
+  running(100);
+  running(50);
+  running(20);
+
+  middleRun(20);
+
+  stare(1000);
  
-  display.clearDisplay();
-  
-  // Draw 21 EYES_SLEEP bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_1, 128, 64, 1);
-  display.display();
 
-  delay(200); // Pause for 2 seconds 
-  display.clearDisplay();
-  
-  // Draw 21 EYES_SLEEP bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_2, 128, 64, 1);
-  display.display();
-
-  delay(200); // Pause for 2 seconds 
-  display.clearDisplay();
-  
-  // Draw 21 EYES_SLEEP bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_3, 128, 64, 1);
-  display.display();
-
-  delay(200); // Pause for 2 seconds 
-  display.clearDisplay();
-  
-  // Draw 21 EYES_SLEEP bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_4, 128, 64, 1);
-  display.display();
-
-  delay(200); // Pause for 2 seconds 
-  display.clearDisplay();
-  
-  // Draw 21 EYES_SLEEP bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_5, 128, 64, 1);
-  display.display();
-
-  delay(200); // Pause for 2 seconds
-  
-  display.clearDisplay();
-  
-  // Draw 21 EYES_SLEEP bitmap on the screen
-  display.drawBitmap(0, 0, image_blink_1, 128, 64, 1);
-  display.display();
 }
