@@ -1,5 +1,6 @@
 {
-    "sketch": "code\\eyes.ino",
-    "configuration": "FlashFreq=80,UploadSpeed=921600",
-    "board": "esp32:esp32:nodemcu-32s"
+    "sketch": "code\\lia_robot\\src\\main.cpp",
+    "configuration": "PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none",
+    "board": "esp32:esp32:esp32",
+    "port": "COM3"
 }
