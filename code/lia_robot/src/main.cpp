@@ -41,7 +41,8 @@ int alvo = 3500;
 int error, lastError = 0;
 float corrigir;
 
-int velocidadeInicial = 200;
+int  velocidadeBase = 200;
+int velocidadeInicial = velocidadeBase;
 int vMax = 220;
 int vMin = -120;
 int velocidadeE, velocidadeD;
@@ -169,12 +170,17 @@ unsigned long calculatePosition(unsigned long * array, unsigned long length){
   unsigned long num = 0, den = 0, calculatedPos = 0;
   if (array[0] > IR_THRESHOLD && array[1] > IR_THRESHOLD && array[2] > IR_THRESHOLD && array[3] > IR_THRESHOLD && array[4] > IR_THRESHOLD && array[5] > IR_THRESHOLD && array[6] > IR_THRESHOLD && array[7] > IR_THRESHOLD) {
     if (lastPos > alvo) {
-      calculatedPos = 4500;
+      calculatedPos = 7000;
+      velocidadeInicial = velocidadeBase*0.8;
     } else {
-      calculatedPos = 2500;
+      calculatedPos = 0;
+      velocidadeInicial = velocidadeBase*0.8;
+
     }
   }
   else {
+    velocidadeInicial = velocidadeBase;
+
     for(int i = 0; i < length; i++){
       num += 1000 * i * array[i];
       den += array[i];
