@@ -36,19 +36,19 @@ unsigned long ir_max_value[IR_SENSORS_NUMBER] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 unsigned long positio, lastPos;
 int alvo = 3500;
-#define IR_THRESHOLD 500
+#define IR_THRESHOLD 700
 
 int error, lastError = 0;
 float corrigir;
 
-int velocidadeInicial = 150;
-int vMax = 180;
+int velocidadeInicial = 200;
+int vMax = 220;
 int vMin = -120;
 int velocidadeE, velocidadeD;
 
 double Kp = 0.040;
 float Ki = 0;
-float Kd = 0.0;
+float Kd = 0.015;
 
 int timer1 = 0;
 int timer2 = 0;
@@ -169,9 +169,9 @@ unsigned long calculatePosition(unsigned long * array, unsigned long length){
   unsigned long num = 0, den = 0, calculatedPos = 0;
   if (array[0] > IR_THRESHOLD && array[1] > IR_THRESHOLD && array[2] > IR_THRESHOLD && array[3] > IR_THRESHOLD && array[4] > IR_THRESHOLD && array[5] > IR_THRESHOLD && array[6] > IR_THRESHOLD && array[7] > IR_THRESHOLD) {
     if (lastPos > alvo) {
-      calculatedPos = 5000;
+      calculatedPos = 4500;
     } else {
-      calculatedPos = 2000;
+      calculatedPos = 2500;
     }
   }
   else {
@@ -277,7 +277,7 @@ void meCorrige(){
   Serial.print("\t");
   Serial.println(velocidadeE);
 */
-  // move(velocidadeE, velocidadeD);
+  move(velocidadeE, velocidadeD);
 
   lastError = error;
 }
@@ -332,21 +332,34 @@ void setup() {
   } //wait for the button1 to be pressed
   buzz(1000);
   delay(1000);
-  testeMotor();
  
 }
 
 void loop() {
   
   readSensor(ir_values);
-  Serial.print("Real");
-  for(int i = 0; i < IR_SENSORS_NUMBER; i++){
-    Serial.print("|  ");
-    Serial.print(analogRead(ir_sensors_pins[i]));
-    Serial.print("\t");
-  }
-  Serial.print("Norma");
-  printSensor(ir_values);
+  // Serial.print("Real");
+  // for(int i = 0; i < IR_SENSORS_NUMBER; i++){
+  //   Serial.print("|  ");
+  //   Serial.print(analogRead(ir_sensors_pins[i]));
+  //   Serial.print("\t");
+  // }
+  // Serial.print("Norma");
+  // printSensor(ir_values);
   timer1 = millis();
   
+  positio = calculatePosition(ir_values, IR_SENSORS_NUMBER);
+  meCorrige();
+
+  Serial.print("Positio: ");
+  Serial.print(positio);
+  Serial.print("\t Error: ");
+  Serial.print(error);
+  Serial.print("\tCorrigir: ");
+  Serial.print(corrigir);
+  Serial.print("\tvD: ");
+  Serial.print(velocidadeD);
+  Serial.print("\tvE: ");
+  Serial.print(velocidadeE);
+  Serial.println("\t");
 }
