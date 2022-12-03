@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"name": "lia_robot",
+			"path": "../../lia_robot"
+		},
+		{
+			"name": "bluetooth",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

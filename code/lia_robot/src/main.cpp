@@ -35,8 +35,8 @@ unsigned long ir_min_value[IR_SENSORS_NUMBER] = {4095, 4095, 4095, 4095, 4095, 4
 unsigned long ir_max_value[IR_SENSORS_NUMBER] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 unsigned long positio, lastPos;
-int alvo = 3500;
-#define IR_THRESHOLD 700
+int alvo = 3600;
+#define IR_THRESHOLD 850
 
 int error, lastError = 0;
 float corrigir;
@@ -47,9 +47,9 @@ int vMax = 220;
 int vMin = -120;
 int velocidadeE, velocidadeD;
 
-double Kp = 0.040;
+double Kp = 0.060;
 float Ki = 0;
-float Kd = 0.015;
+float Kd = 0.030;
 
 int timer1 = 0;
 int timer2 = 0;
@@ -171,10 +171,10 @@ unsigned long calculatePosition(unsigned long * array, unsigned long length){
   if (array[0] > IR_THRESHOLD && array[1] > IR_THRESHOLD && array[2] > IR_THRESHOLD && array[3] > IR_THRESHOLD && array[4] > IR_THRESHOLD && array[5] > IR_THRESHOLD && array[6] > IR_THRESHOLD && array[7] > IR_THRESHOLD) {
     if (lastPos > alvo) {
       calculatedPos = 7000;
-      velocidadeInicial = velocidadeBase*0.8;
+      velocidadeInicial = velocidadeBase*0.9;
     } else {
       calculatedPos = 0;
-      velocidadeInicial = velocidadeBase*0.8;
+      velocidadeInicial = velocidadeBase*0.9;
 
     }
   }
@@ -334,6 +334,24 @@ void setup() {
   while(!digitalRead(button1)){
     readSensor(ir_values);
     //printSensor(ir_values);
+    if(digitalRead(button3)){
+      velocidadeBase = 245;
+      velocidadeInicial = velocidadeBase;
+      vMax = 255;
+      Kp = 0.070;
+      Ki = 0;
+      Kd = 0.035;
+      buzz(150);
+    }
+    if(digitalRead(button2)){
+      velocidadeBase = 225;
+      velocidadeInicial = velocidadeBase;
+      vMax = 255;
+      Kp = 0.062;
+      Ki = 0;
+      Kd = 0.035;
+      buzz(250);
+    }
     delay(50);
   } //wait for the button1 to be pressed
   buzz(1000);
